@@ -1,5 +1,5 @@
 import json
-from task_manager import Task
+from task_details import Task
 
 class Storage:
     def __init__(self, filename):
