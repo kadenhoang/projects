@@ -1,5 +1,5 @@
-from task_manager import TaskManager
-from utils import parse_date
+from todolist.todolist1.task_manager import TaskManager
+from todolist.todolist1.utils import parse_date
 
 def main():
     manager = TaskManager()

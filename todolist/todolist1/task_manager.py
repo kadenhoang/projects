@@ -1,16 +1,8 @@
-from storage import Storage
-from reminders import Reminders
-from utils import generate_id
+from todolist.todolist1.storage import Storage
+from todolist.todolist1.reminders import Reminders
+from todolist.todolist1.task_details import Task
+from todolist.todolist1.utils import generate_id
 
-class Task:
-    def __init__(self, title, description, due_date, timeframe, reminder=None, completed=False, task_id=None):
-        self.id = task_id or generate_id()
-        self.title = title
-        self.description = description
-        self.due_date = due_date
-        self.timeframe = timeframe
-        self.reminder = reminder
-        self.completed = completed
 
 class TaskManager:
     def __init__(self):
@@ -25,7 +17,7 @@ class TaskManager:
         self.storage.save_tasks(self.tasks)
 
     def add_task(self, title, description, due_date, timeframe, reminder=None):
-        task = Task(title, description, due_date, timeframe, reminder)
+        task = Task(title, description, due_date, timeframe, reminder, completed=False, task_id=generate_id())
         self.tasks.append(task)
         self.save_tasks()
         print(f"Task '{title}' added.")
