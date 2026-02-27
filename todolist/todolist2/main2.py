@@ -7,6 +7,7 @@ def main():
     print("2. show task.")
     print("3. mark complete.")
     print("4. delete task.")
+    print("5. edit task.")
 
     while True:
         try:
@@ -35,6 +36,17 @@ def main():
                 else:
                     completed = False
                 Task_Manager.complete_task(id,completed)
+
+            case 4:
+                id = int(input("Task ID: "))
+                Task_Manager.delete_tasks(id)
+
+            case 5:
+                id = int(input("Task ID: "))
+                Task_Manager.edit_task(id)
+
+            case _ :
+                print("Invalid Choice, Try Again.")
         
 if __name__ == "__main__":
     main()
