@@ -1,1 +1,1 @@
-1|Grocery|hehe|1|True
+1|Go To Church|to pray for my sins|11/2/2022|False

@@ -1,3 +1,5 @@
+from utils2 import date_format
+
 class Task_Manager:
     def __init__(self, id, title, description, due_date, completed = False):
         self.id = id
@@ -8,7 +10,11 @@ class Task_Manager:
 
     @classmethod
     def add_task(cls, id, title, description, due_date):
-        task = Task_Manager(id, title, description, due_date)
+        valid_date = date_format(due_date)
+    
+        # Convert datetime to string for storage
+        due_date_str = valid_date.strftime("%Y-%m-%d")
+        task = Task_Manager(id, title, description, due_date_str)
         with open("tasks.txt", "a") as file:
             file.write(f"{task.id}|{task.title}|{task.description}|{task.due_date}|{task.completed}\n")
             #all the fields after being written in the file become string data
@@ -17,10 +23,13 @@ class Task_Manager:
     def view_tasks(cls):
         with open("tasks.txt", "r") as file:
             tasks = file.readlines()
+            if not tasks:
+                print("Empty List")
             for task in tasks:
                 id, title, description, due_date, completed = task.strip().split("|")
                 status = "✔" if completed == "True" else "✗"
                 print(f"{status} | ID: {id} | Title: {title}, Description: {description}, Due Date: {due_date}")
+                
 
     # Delete task by id
     @classmethod
