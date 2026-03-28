@@ -49,17 +49,29 @@ dfc["Size"] = dfc.groupby("Gender_Category")["Size"].transform(
 #df["return_flag"] = (df["Units_Sold"] < 0).astype(int) #flag if a product is returned (negative)
 #df["sale_flag"] = (df["Units_Sold"] > 0).astype(int) # flag if a product is sold
 
+
 # - Unit_Sold - MRP - Revenue
+
 #flag unsold product
 dfc["unsold_flag"] = dfc["Units_Sold"].isna().astype(int)
 #fill the NaN with 0
 dfc["Units_Sold"] = dfc["Units_Sold"].fillna(0)
 
-#calculate the Reveneue
+
+#check for how many rows that has sale but no MRP or Discount
+mask = dfc[(dfc["Units_Sold"] > 0) & (dfc["MRP"].isna() | dfc["Discount_Applied"].isna())]
+print(mask)
+
+
+#change MRP and Discount_Applied
+dfc["MRP"] = dfc.groupby("Product_Line")["MRP"].transform(
+    lambda x: x.fillna(x.median())
+)
+dfc["Discount_Applied"] = dfc.groupby("Gender_Category")["Discount_Applied"].transform(
+    lambda x: x.fillna(x.median())
+)
+#calculate the Revenue
 dfc["final_price"] = dfc["MRP"] * ( 1 - dfc["Discount_Applied"])
 dfc["Revenue"] = dfc["final_price"] * dfc["Units_Sold"]
 
 print(dfc.head(30))
-
-mask = dfc[(dfc["Units_Sold"] > 0) & (dfc["MRP"].isna() | dfc["Discount_Applied"].isna())]
-print(mask)
