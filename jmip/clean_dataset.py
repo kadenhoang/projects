@@ -26,4 +26,6 @@ print(df_cleaned.head())
 print()
 print(df_cleaned.info())
 
-df.to_csv("data/Cleaned_DS_jobs.csv",index=False)
+df_cleaned.to_csv("data/Cleaned_DS_jobs.csv",index=False)
+print("Dataset cleaned and exported")
+
